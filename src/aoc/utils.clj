@@ -7,4 +7,4 @@
   (-> (format "inputs/2021/day%02d.txt" day)
       io/resource
       slurp
-      (str/split #"\n")))
+      str/split-lines))
