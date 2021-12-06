@@ -17,26 +17,20 @@
 (defn auto-range [a b]
   (if (> a b)
     (range a (dec b) -1)
-    (range a (inc b)))
-;;  (apply range (sort a b))
-)
+    (range a (inc b))))
 
-(defn combos [xs ys]
-  (for [x xs, y ys] [x y]))
-
-(defn freqs [xys]
-  (frequencies (map (fn [[x y]] (+ (* 1000 x) y)) xys)))
+(defn combos [xs ys] (for [x xs, y ys] [x y]))
 
 (defn cell-range [[x1 y1 x2 y2] with-diagonals]
   (let [xs (auto-range x1 x2)
         ys (auto-range y1 y2)]
     (cond
-      (or (= y1 y2) (= x1 x2)) (freqs (combos xs ys))
-      with-diagonals           (freqs (map vector xs ys)))))
+      (or (= y1 y2) (= x1 x2)) (combos xs ys)
+      with-diagonals           (map vector xs ys))))
 
 (defn common-points [in with-diagonals]
-  (->> (map #(cell-range % (or with-diagonals false)) in)
-       (apply merge-with +)
+  (->> (mapcat #(cell-range % (or with-diagonals false)) in)
+       frequencies
        (filter #(> (val %) 1))
        count))
 
@@ -47,5 +41,4 @@
 (comment
   (solve (parse-input (utils/input 5)))
   ;; => 5576 18144
-
   ,)
