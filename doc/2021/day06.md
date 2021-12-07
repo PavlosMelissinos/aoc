@@ -40,7 +40,7 @@ Realizing what you're trying to do, the submarine automatically produces
 a list of the ages of several hundred nearby lanternfish (your puzzle
 input). For example, suppose you were given the following list:
 
-3,4,3,1,2
+`3,4,3,1,2`
 
 This list means that the first fish has an internal timer of 3, the
 second fish has an internal timer of 4, and so on until the fifth fish,
@@ -74,7 +74,15 @@ each other number decreases by 1 if it was present at the start of the
 day.
 
 In this example, after 18 days, there are a total of 26 fish. After 80
-days, there would be a total of 5934.
+days, there would be a total of `5934`.
 
 Find a way to simulate lanternfish. How many lanternfish would there be
 after 80 days?
+
+--- Part Two ---
+
+Suppose the lanternfish live forever and have unlimited food and space. Would they take over the entire ocean?
+
+After 256 days in the example above, there would be a total of `26984457539` lanternfish!
+
+How many lanternfish would there be after 256 days?

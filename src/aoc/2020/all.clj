@@ -1,4 +1,4 @@
-(ns advent2020
+(ns aoc.2020.all
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
             [clojure.set :as set]))
@@ -6,9 +6,9 @@
 ;; Day 1
 
 (def input1
-  (map #(Integer. %) (-> (io/resource "inputs/day1.txt")
-                         slurp
-                         (str/split #"\n"))))
+  (map parse-long (-> (io/resource "inputs/day1.txt")
+                      slurp
+                      (str/split #"\n"))))
 
 (defn day01a [inp target]
   (loop [asc (sort inp)]
@@ -26,6 +26,8 @@
        (apply *)))
 ;; (day01b input1) => 212900130
 
+(defn day01 [inp])
+
 
 ;; Day 2
 
@@ -37,7 +39,7 @@
 (defn day02-parse [ln]
   (->> (str/split ln #"(-|:| )")
        (remove empty?)
-       (map #(%1 %2) [#(Integer. %) #(Integer. %) identity identity])))
+       (map #(%1 %2) [parse-long parse-long identity identity])))
 ;; (day02parse "1-3 a: abcde") => (1 3 "a" "abcde")
 ;; (day02parse "3-11 z: zzzzzdzzzzlzz") => (3 11 "z" "zzzzzdzzzzlzz")
 
@@ -118,16 +120,16 @@
        count))
 ;; (day04a input4) => 200
 
-(defn parse-int [s]
-  (Integer/parseInt (re-find #"\A-?\d+" s)))
+(defn parse-num [s]
+  (parse-long (re-find #"\A-?\d+" s)))
 
 (defn day04b [inp]
   (let [validators {:byr (fn [byr] (and (= (count byr) 4) (<= 1920 (Integer/parseInt byr) 2002)))
                     :iyr (fn [iyr] (and (= (count iyr) 4) (<= 2010 (Integer/parseInt iyr) 2020)))
                     :eyr (fn [eyr] (and (= (count eyr) 4) (<= 2020 (Integer/parseInt eyr) 2030)))
                     :hgt (fn [hgt] (cond
-                                     (str/ends-with? hgt "cm") (<= 150 (parse-int hgt) 193)
-                                     (str/ends-with? hgt "in") (<= 59 (parse-int hgt) 76)))
+                                     (str/ends-with? hgt "cm") (<= 150 (parse-num hgt) 193)
+                                     (str/ends-with? hgt "in") (<= 59 (parse-num hgt) 76)))
                     :hcl (fn [hcl] (re-matches #"#[0-9a-f]{6}" hcl))
                     :ecl #{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"}
                     :pid (fn [pid] (re-matches #"[0-9]{9}" pid))}
