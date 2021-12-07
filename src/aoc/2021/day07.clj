@@ -8,8 +8,11 @@
 
 (defn sum-of-range [n] (* 1/2 n (inc n)))
 
-(defn distance [a b]
-  (math/abs (- a b)))
+(defn distance [^long a ^long b]
+  (Math/abs (- a b)))
+
+(defn median [coll]
+  (nth (sort coll) (Math/floor (/ (count coll) 2))))
 
 (defn score [positions new-position increasing-fuel-burn?]
   (->> (map (partial distance new-position) positions)
@@ -18,10 +21,12 @@
 
 (defn optimal-score [positions increasing-fuel-burn?]
   (let [positions (vec (sort positions))]
-    (->> (range (first positions) (last positions))
-         (map #(vector % (score positions % increasing-fuel-burn?)))
-         (apply min-key second)
-         second)))
+    (if-not increasing-fuel-burn?
+      (score positions (median positions) increasing-fuel-burn?)
+      (->> (range (first positions) (last positions))
+           (map #(vector % (score positions % increasing-fuel-burn?)))
+           (apply min-key second)
+           second))))
 
 (defn solve [positions]
   [(optimal-score positions false)
