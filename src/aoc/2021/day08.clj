@@ -56,9 +56,8 @@
 (defmethod look-up 8 [_ digits] (first (filter #(= 7 (count %)) digits)))
 
 (defmethod look-up 9 [_ digits]
-  (let [four-and-seven (set/union (set (look-up 4 digits))
-                                  (set (look-up 7 digits)))]
-    (->> (filter #(set/superset? (set %) four-and-seven) digits)
+  (let [four (set (look-up 4 digits))]
+    (->> (filter #(set/superset? (set %) four) digits)
          (filter #(= 6 (count %)))
          first)))
 
