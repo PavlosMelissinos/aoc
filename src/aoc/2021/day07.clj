@@ -1,6 +1,5 @@
 (ns aoc.2021.day07
   (:require [clojure.string :as str]
-            [clojure.java.math :as math]
             [aoc.utils :as utils]))
 
 (defn parse-input [[in _]]
@@ -16,7 +15,7 @@
 
 (defn score [positions new-position increasing-fuel-burn?]
   (->> (map (partial distance new-position) positions)
-       (map #(if increasing-fuel-burn? (sum-of-range %) %))
+       (map (if increasing-fuel-burn? sum-of-range identity))
        (apply +)))
 
 (defn optimal-score [positions increasing-fuel-burn?]
